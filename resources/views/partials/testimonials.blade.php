@@ -1,11 +1,11 @@
 <section id="testimonials" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16"
   x-data="{
     index: 0,
-    items: [
-      { role: 'Sekretaris Desa', name: 'Desa Maju Sejahtera', quote: 'Layanan administrasi lebih terukur dan cepat. Warga bisa memantau proses tanpa harus berulang kali datang ke kantor desa.' },
-      { role: 'Kepala Sekolah', name: 'SMP Negeri Harapan Bangsa', quote: 'Proses penilaian dan rapor jauh lebih rapi. Guru lebih fokus ke pembelajaran, bukan hanya pengisian laporan.' },
-      { role: 'Pelaku UMKM', name: 'Sentra Kerajinan Bambu', quote: 'Kami punya etalase digital yang rapi. Pembeli dari luar daerah jadi lebih mudah menemukan produk kami.' }
-    ],
+    items: {{ $testimonials->map(fn($t) => [
+      'role' => $t->role,
+      'name' => $t->name,
+      'quote' => $t->quote,
+    ])->values()->toJson() }},
     intervalId: null,
   }"
   x-init="

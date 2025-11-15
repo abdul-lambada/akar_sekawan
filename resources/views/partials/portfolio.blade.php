@@ -13,20 +13,16 @@
     </div>
   </div>
   <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 text-xs">
-    <div class="rounded-xl border border-slate-200 bg-white p-4 flex flex-col gap-2 dark:border-slate-700 dark:bg-slate-900">
-      <div class="text-[11px] font-semibold text-emerald-700 dark:text-emerald-300">Desa Digital</div>
-      <div class="text-sm font-semibold text-slate-900 dark:text-slate-100">Desa Maju Sejahtera</div>
-      <p class="text-slate-600 dark:text-slate-300">Digitalisasi layanan administrasi desa dan pelaporan program bantuan dengan dashboard terpusat.</p>
-    </div>
-    <div class="rounded-xl border border-slate-200 bg-white p-4 flex flex-col gap-2 dark:border-slate-800 dark:bg-slate-900/70">
-      <div class="text-[11px] font-semibold text-emerald-700 dark:text-emerald-300">SIAKAD SMP</div>
-      <div class="text-sm font-semibold text-slate-900 dark:text-slate-100">SMP Negeri Harapan Bangsa</div>
-      <p class="text-slate-600 dark:text-slate-300">SIAKAD untuk penilaian, rapor digital, dan absensi yang terhubung dengan orang tua siswa.</p>
-    </div>
-    <div class="rounded-xl border border-slate-200 bg-white p-4 flex flex-col gap-2 dark:border-slate-800 dark:bg-slate-900/70">
-      <div class="text-[11px] font-semibold text-emerald-700 dark:text-emerald-300">UMKM Desa</div>
-      <div class="text-sm font-semibold text-slate-900 dark:text-slate-100">Sentra Kerajinan Bambu</div>
-      <p class="text-slate-600 dark:text-slate-300">Portal katalog online untuk produk kerajinan bambu yang meningkatkan jangkauan pasar.</p>
-    </div>
+    @foreach ($portfolios as $portfolio)
+      <div class="rounded-xl border border-slate-200 bg-white p-4 flex flex-col gap-2 dark:border-slate-800 dark:bg-slate-900/70">
+        @if ($portfolio->category)
+          <div class="text-[11px] font-semibold text-emerald-700 dark:text-emerald-300">{{ $portfolio->category }}</div>
+        @endif
+        <div class="text-sm font-semibold text-slate-900 dark:text-slate-100">{{ $portfolio->title }}</div>
+        @if ($portfolio->summary)
+          <p class="text-slate-600 dark:text-slate-300">{{ $portfolio->summary }}</p>
+        @endif
+      </div>
+    @endforeach
   </div>
 </section>

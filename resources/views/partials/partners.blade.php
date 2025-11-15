@@ -22,13 +22,12 @@
   <div
     x-data="{
       index: 0,
-      logos: [
-        { name: 'Dinas Pendidikan', label: 'Dinas Pendidikan', type: 'Pemerintah', short: 'Kemitraan sekolah & kabupaten' },
-        { name: 'SD/ SMP/ SMA Negeri', label: 'Sekolah Negeri', type: 'Sekolah', short: 'Jejaring sekolah mitra' },
-        { name: 'Bank Daerah', label: 'Bank Daerah', type: 'Payment', short: 'Pembayaran iuran & retribusi' },
-        { name: 'Payment Gateway', label: 'Payment Gateway', type: 'Payment', short: 'Pembayaran non-tunai', },
-        { name: 'Cloud Provider', label: 'Cloud Provider', type: 'Cloud', short: 'Hosting & backup off-site' },
-      ],
+      logos: {{ $partners->map(fn($p) => [
+        'name' => $p->name,
+        'label' => $p->label,
+        'type' => $p->type,
+        'short' => $p->short_description,
+      ])->values()->toJson() }},
       intervalId: null,
     }"
     x-init="

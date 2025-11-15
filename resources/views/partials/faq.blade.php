@@ -16,40 +16,11 @@
   <div
     x-data="{
       open: 0,
-      faqs: [
-        {
-          q: 'Apakah Akar Sekawan bisa berjalan di lingkungan dengan internet terbatas?',
-          a: 'Bisa. Untuk desa dan sekolah dengan internet terbatas, kami biasanya memasang sistem di server lokal (on-premise) dan menyediakan mekanisme sinkronisasi terjadwal ketika ada koneksi internet. Pengguna tetap bisa mengakses aplikasi melalui jaringan lokal kantor desa/sekolah.'
-        },
-        {
-          q: 'Bagaimana jika listrik atau server mati, apakah data aman?',
-          a: 'Data disimpan di basis data terstruktur dan dapat di-backup secara berkala. Kami menyiapkan jadwal backup otomatis dan panduan backup manual sehingga operator lokal dapat menyimpan salinan data ke media eksternal atau server cadangan.'
-        },
-        {
-          q: 'Berapa lama proses implementasi sampai bisa dipakai harian?',
-          a: 'Untuk satu desa atau satu sekolah, implementasi dasar biasanya 2–4 minggu: konsultasi & pemetaan alur kerja, instalasi & konfigurasi, input data awal, uji coba terbatas, lalu go-live dengan pendampingan intensif.'
-        },
-        {
-          q: 'Apakah ada pelatihan untuk perangkat desa, guru, dan pelaku UMKM?',
-          a: 'Ada. Kami menyediakan sesi pelatihan onsite dan/atau online, modul panduan singkat, serta sesi tanya jawab setelah sistem digunakan beberapa minggu untuk memastikan pengguna benar-benar merasa nyaman.'
-        },
-        {
-          q: 'Apakah Akar Sekawan bisa diintegrasikan dengan sistem yang sudah ada?',
-          a: 'Pada banyak kasus, sistem dapat diintegrasikan melalui impor/ekspor data (CSV/Excel) atau API jika sistem lama mendukung. Integrasi biasanya dibahas spesifik pada tahap analisis kebutuhan.'
-        },
-        {
-          q: 'Bagaimana skema lisensi penggunaan Akar Sekawan?',
-          a: 'Lisensi biasanya berbasis langganan tahunan dengan jumlah pengguna tak terbatas di dalam satu desa atau satu institusi pendidikan. Detail lisensi (misalnya untuk beberapa sekolah sekaligus atau kerja sama tingkat kabupaten) dibahas khusus pada tahap penawaran.'
-        },
-        {
-          q: 'Apakah hosting disediakan atau harus menggunakan server sendiri?',
-          a: 'Kami mendukung dua opsi: hosting dikelola oleh tim Akar Sekawan (cloud) atau dipasang di server milik mitra (on-premise). Banyak desa dan sekolah memilih kombinasi: server lokal untuk akses cepat + replikasi ke server cloud sebagai backup.'
-        },
-        {
-          q: 'Seperti apa gambaran biaya implementasi dan pemeliharaan?',
-          a: 'Biaya biasanya terdiri dari tiga komponen: biaya setup awal (analisis, instalasi, migrasi data), biaya pelatihan, dan biaya langganan/pemeliharaan tahunan. Besarannya menyesuaikan skala pengguna dan modul yang dipakai, sehingga akan dihitung secara spesifik pada tahap penawaran resmi.'
-        },
-      ],
+      faqs: {{ $faqs->map(fn($f) => [
+        'q' => $f->question,
+        'a' => $f->answer,
+        'category' => $f->category,
+      ])->values()->toJson() }},
     }"
     class="rounded-2xl border border-slate-200 bg-white/90 p-4 sm:p-6 dark:border-slate-800 dark:bg-slate-900/70 divide-y divide-slate-200 dark:divide-slate-800"
   >
