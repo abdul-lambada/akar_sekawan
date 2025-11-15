@@ -1,34 +1,29 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\Testimonial;
-use App\Models\Partner;
-use App\Models\Portfolio;
-use App\Models\Faq;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TestimonialController;
+use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\FaqController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\SettingController;
 
-Route::get('/', function () {
-    $testimonials = Testimonial::query()
-        ->where('is_active', true)
-        ->orderBy('order')
-        ->get(['role', 'name', 'quote']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-    $partners = Partner::query()
-        ->where('is_active', true)
-        ->orderBy('order')
-        ->get(['name', 'label', 'type', 'short_description']);
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
-    $portfolios = Portfolio::query()
-        ->where('is_active', true)
-        ->orderBy('order')
-        ->get(['category', 'title', 'summary']);
-
-    $faqs = Faq::query()
-        ->where('is_active', true)
-        ->orderBy('order')
-        ->get(['category', 'question', 'answer']);
-
-    return view('welcome', compact('testimonials', 'partners', 'portfolios', 'faqs'));
-})->name('home');
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+    Route::view('dashboard', 'admin.dashboard')->name('dashboard');
+    Route::get('settings', [SettingController::class, 'edit'])->name('settings.edit');
+    Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
+    Route::resource('testimonials', TestimonialController::class)->except(['show']);
+    Route::resource('partners', PartnerController::class)->except(['show']);
+    Route::resource('portfolios', PortfolioController::class)->except(['show']);
+    Route::resource('faqs', FaqController::class)->except(['show']);
+});
 
 Route::view('/tentang', 'pages.about')->name('about');
 Route::view('/layanan', 'pages.services')->name('services');

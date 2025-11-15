@@ -13,8 +13,8 @@
     </div>
     <div class="space-y-2 text-xs text-slate-800 dark:text-slate-100">
       <div class="font-semibold">Hubungi kami</div>
-      <div>Email: <span class="font-mono">info@akarsekawan.id</span></div>
-      <div>Telepon/WhatsApp: <span class="font-mono">+62-8xx-xxxx-xxxx</span></div>
+      <div>Email: <span class="font-mono">{{ $setting->email ?? 'info@akarsekawan.id' }}</span></div>
+      <div>Telepon/WhatsApp: <span class="font-mono">{{ $setting->wa ?? '+62-8xx-xxxx-xxxx' }}</span></div>
     </div>
   </div>
 </section>

@@ -3,8 +3,11 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@yield('title', 'Akar Sekawan')</title>
-    <meta name="description" content="Akar Sekawan - Solusi desa digital, SIAKAD SD/SMP/SMA/SMK, dan pemberdayaan UMKM." />
+    <title>@yield('title', $setting->name ?? 'Akar Sekawan')</title>
+    <meta name="description" content="{{ ($setting->name ?? 'Akar Sekawan') . ' - Solusi desa digital' }}" />
+    @if (!empty($setting?->logo))
+      <link rel="icon" type="image/png" href="{{ asset('storage/'.$setting->logo) }}" />
+    @endif
 
     <script>
       window.tailwind = window.tailwind || {};
@@ -66,11 +69,15 @@
     >
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-3">
         <div class="flex items-center gap-2">
-          <div class="h-9 w-9 rounded-xl bg-emerald-500/10 border border-emerald-400/40 flex items-center justify-center">
-            <span class="text-lg font-semibold tracking-tight text-emerald-300">AS</span>
+          <div class="h-9 w-9 rounded-xl bg-emerald-500/10 border border-emerald-400/40 flex items-center justify-center overflow-hidden">
+            @if (!empty($setting?->logo))
+              <img src="{{ asset('storage/'.$setting->logo) }}" alt="{{ $setting->name }}" class="h-8 w-8 object-contain">
+            @else
+              <span class="text-lg font-semibold tracking-tight text-emerald-300">AS</span>
+            @endif
           </div>
           <div>
-            <div class="text-sm font-semibold tracking-tight">Akar Sekawan</div>
+            <div class="text-sm font-semibold tracking-tight">{{ $setting->name ?? 'Akar Sekawan' }}</div>
             <div class="text-[11px] text-slate-500 dark:text-slate-300 leading-tight">Desa Digital · SIAKAD · UMKM</div>
           </div>
         </div>
@@ -228,11 +235,11 @@
     >
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 text-xs text-slate-500 dark:text-slate-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <div class="font-semibold text-slate-800 dark:text-slate-200">Akar Sekawan</div>
+          <div class="font-semibold text-slate-800 dark:text-slate-200">{{ $setting->name ?? 'Akar Sekawan' }}</div>
           <div class="text-[11px]">Mengakar di desa, bertumbuh bersama sekolah dan UMKM.</div>
         </div>
         <div class="flex flex-wrap gap-4">
-          <div>© {{ date('Y') }} Akar Sekawan. All rights reserved.</div>
+          <div>© {{ date('Y') }} {{ $setting->name ?? 'Akar Sekawan' }}. All rights reserved.</div>
         </div>
       </div>
     </footer>
