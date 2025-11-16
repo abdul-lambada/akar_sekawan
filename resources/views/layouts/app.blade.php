@@ -256,6 +256,39 @@
       2
     </button>
 
+    <!-- Floating CTA (mobile only) -->
+    <div class="fixed bottom-5 right-5 z-30 md:hidden">
+      @php
+        $waNumber = $setting->wa ?? null;
+        $waLink = $waNumber
+          ? 'https://wa.me/' . preg_replace('/[^0-9]/', '', $waNumber)
+          : null;
+      @endphp
+      @if ($waLink)
+        <a
+          href="{{ $waLink }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-3 py-2 text-xs font-semibold text-slate-950 shadow-lg hover:bg-emerald-400 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4">
+            <path d="M16.72 5.72A7.5 7.5 0 0 1 18 10.5a7.5 7.5 0 0 1-7.5 7.5 7.5 7.5 0 0 1-3.78-1.03L3 21l4.03-3.72" />
+            <path d="M9 10.5c.3.6.8 1.1 1.4 1.4" />
+            <path d="M11.5 11.9c.4.2.9.3 1.4.3" />
+          </svg>
+          <span>Chat WhatsApp</span>
+        </a>
+      @else
+        <button
+          type="button"
+          class="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-3 py-2 text-xs font-semibold text-slate-950 shadow-lg hover:bg-emerald-400 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+          @click="const el = document.getElementById('contact'); if (el) el.scrollIntoView({ behavior: 'smooth' });"
+        >
+          <span>Diskusi Kebutuhan</span>
+        </button>
+      @endif
+    </div>
+
     <!-- Toast notification -->
     <div
       x-show="toastVisible"

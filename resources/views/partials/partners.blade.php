@@ -14,7 +14,7 @@
     <div class="text-[11px] text-slate-500 dark:text-slate-300">
       <span class="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 dark:border-slate-700 dark:bg-slate-900/70">
         <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
-        <span>Contoh logo (placeholder)</span>
+        <span>Berputar otomatis · pause saat diarahkan</span>
       </span>
     </div>
   </div>
@@ -27,6 +27,7 @@
         'label' => $p->label,
         'type' => $p->type,
         'short' => $p->short_description,
+        'logo' => $p->logo_path ? asset('storage/'.$p->logo_path) : null,
       ])->values()->toJson() }},
       intervalId: null,
     }"
@@ -38,37 +39,47 @@
     "
     class="space-y-4"
   >
-    <!-- Slider untuk desktop -->
-    <div class="hidden md:flex items-center justify-between gap-6 rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 dark:border-slate-800 dark:bg-slate-900/70">
-      <div class="flex items-center gap-6">
-        <template x-for="(logo, i) in logos" :key="i">
-          <button
-            type="button"
-            @click="index = i"
-            class="group inline-flex flex-col items-center gap-1 text-[11px] text-slate-500 dark:text-slate-300 opacity-60 hover:opacity-100 transition"
-            :class="index === i ? 'opacity-100 text-slate-800 dark:text-slate-100' : ''"
-          >
-            <div class="flex items-center justify-center h-8">
-              <div class="h-8 px-3 rounded-full border border-slate-200 bg-slate-50/80 flex items-center justify-center text-[11px] font-semibold text-slate-700 dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-100">
-                <span x-text="logo.label"></span>
-              </div>
-            </div>
-            <span class="text-[10px]" x-text="logo.type"></span>
-          </button>
-        </template>
-      </div>
-      <div class="hidden md:block text-[11px] text-slate-500 dark:text-slate-300 max-w-xs" x-text="logos[index].short"></div>
-    </div>
-
-    <!-- Strip logo scrollable untuk mobile -->
-    <div class="md:hidden flex items-center gap-4 overflow-x-auto py-2 -mx-4 px-4">
-      <template x-for="(logo, i) in logos" :key="'m-' + i">
-        <div class="shrink-0">
-          <div class="h-8 px-3 rounded-full border border-slate-200 bg-white flex items-center justify-center text-[11px] font-semibold text-slate-700 opacity-60 hover:opacity-100 transition dark:border-slate-700 dark:bg-slate-900/80 dark:text-slate-100">
-            <span x-text="logo.label"></span>
+    <div class="rounded-2xl border border-slate-200 bg-white/80 px-4 py-4 flex flex-col gap-3 dark:border-slate-800 dark:bg-slate-900/70">
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-full border border-slate-200 bg-slate-50 flex items-center justify-center overflow-hidden dark:border-slate-700 dark:bg-slate-950">
+            <template x-if="logos.length && logos[index].logo">
+              <img :src="logos[index].logo" :alt="logos[index].name" class="h-8 w-8 object-contain" />
+            </template>
+            <template x-if="!(logos.length && logos[index].logo)">
+              <span class="text-[11px] font-semibold text-slate-500">P</span>
+            </template>
+          </div>
+          <div class="text-xs">
+            <div class="font-semibold text-slate-900 dark:text-slate-100" x-text="logos[index]?.name || '-' "></div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-300" x-text="logos[index]?.type || ''"></div>
           </div>
         </div>
-      </template>
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            class="h-7 w-7 rounded-full border border-slate-300 text-slate-600 flex items-center justify-center text-[11px] hover:border-emerald-400 hover:text-emerald-500 transition dark:border-slate-600 dark:text-slate-200 dark:hover:text-emerald-200"
+            @click="index = (index - 1 + logos.length) % logos.length"
+          >
+            ←
+          </button>
+          <button
+            type="button"
+            class="h-7 w-7 rounded-full border border-slate-300 text-slate-600 flex items-center justify-center text-[11px] hover:border-emerald-400 hover:text-emerald-500 transition dark:border-slate-600 dark:text-slate-200 dark:hover:text-emerald-200"
+            @click="index = (index + 1) % logos.length"
+          >
+            →
+          </button>
+        </div>
+      </div>
+
+      <div class="text-[11px] text-slate-600 dark:text-slate-300 mt-1" x-text="logos[index]?.short || ''"></div>
+
+      <div class="flex items-center justify-end gap-1 mt-1">
+        <template x-for="(logo, i) in logos" :key="i">
+          <span class="h-1.5 w-4 rounded-full" :class="i === index ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-700'"></span>
+        </template>
+      </div>
     </div>
   </div>
 </section>

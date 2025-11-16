@@ -20,7 +20,7 @@ class HomeController extends Controller
         $partners = Partner::query()
             ->where('is_active', true)
             ->orderBy('order')
-            ->get(['name', 'label', 'type', 'short_description']);
+            ->get(['name', 'label', 'type', 'short_description', 'logo_path']);
 
         $portfolios = Portfolio::query()
             ->where('is_active', true)

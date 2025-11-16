@@ -1,6 +1,13 @@
 <section id="hero" class="relative overflow-hidden border-b border-slate-200/80 dark:border-slate-800/80">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-    <div class="space-y-6">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 grid lg:grid-cols-2 gap-10 lg:gap-16 items-center relative">
+    <div class="space-y-6" x-data="{
+      persona: 'desa',
+      copy: {
+        desa: 'Akar Sekawan membantu pemerintah desa mengelola data warga, layanan administrasi, dan transparansi pembangunan secara modern.',
+        sekolah: 'Akar Sekawan membantu sekolah dasar hingga SMA/SMK mengelola akademik, penilaian, dan komunikasi orang tua dalam satu sistem.',
+        umkm: 'Akar Sekawan membantu pelaku UMKM desa mengelola katalog produk, stok, dan pesanan secara online dalam satu portal.',
+      }
+    }">
       <div class="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/5 px-3 py-1 text-[11px] font-medium text-emerald-700 dark:text-emerald-200">
         <span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
         <span>Platform digital untuk desa, sekolah, dan UMKM</span>
@@ -10,10 +17,35 @@
         <span class="text-emerald-300">SIAKAD</span>, dan
         <span class="text-emerald-300">UMKM</span> dalam satu ekosistem.
       </h1>
-      <p class="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-200 max-w-xl">
-        Akar Sekawan membantu pemerintah desa, sekolah dasar hingga SMA/SMK, dan pelaku UMKM
-        untuk mengelola data, layanan, dan kolaborasi secara modern, aman, dan mudah digunakan.
-      </p>
+
+      <div class="inline-flex rounded-full border border-slate-200 bg-white/80 p-1 text-[11px] font-medium text-slate-600 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+        <button
+          type="button"
+          class="px-3 py-1 rounded-full transition"
+          :class="persona === 'desa' ? 'bg-emerald-500 text-slate-950' : 'hover:text-slate-900 dark:hover:text-slate-100'"
+          @click="persona = 'desa'"
+        >
+          Desa
+        </button>
+        <button
+          type="button"
+          class="px-3 py-1 rounded-full transition"
+          :class="persona === 'sekolah' ? 'bg-emerald-500 text-slate-950' : 'hover:text-slate-900 dark:hover:text-slate-100'"
+          @click="persona = 'sekolah'"
+        >
+          Sekolah
+        </button>
+        <button
+          type="button"
+          class="px-3 py-1 rounded-full transition"
+          :class="persona === 'umkm' ? 'bg-emerald-500 text-slate-950' : 'hover:text-slate-900 dark:hover:text-slate-100'"
+          @click="persona = 'umkm'"
+        >
+          UMKM
+        </button>
+      </div>
+
+      <p class="text-sm sm:text-base leading-relaxed text-slate-700 dark:text-slate-200 max-w-xl" x-text="copy[persona]"></p>
       <div class="flex flex-wrap gap-3">
         <a href="#services" class="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-4 py-2 text-xs sm:text-sm font-semibold text-slate-950 shadow-sm hover:bg-emerald-400 transition">
           Jelajahi Layanan
@@ -25,15 +57,33 @@
       <dl class="grid grid-cols-3 gap-4 max-w-md pt-4 border-t border-slate-200 mt-4 dark:border-slate-800">
         <div>
           <dt class="text-[11px] text-slate-500 dark:text-slate-300">Implementasi</dt>
-          <dd class="text-sm font-semibold text-slate-900 dark:text-slate-100">10+ Desa</dd>
+          <dd
+            class="text-sm font-semibold text-slate-900 dark:text-slate-100"
+            x-data="{ value: 0, target: 10 }"
+            x-init="let i = 0; const end = target; const step = () => { if (i <= end) { value = i; i++; setTimeout(step, 70); } }; step();"
+          >
+            <span x-text="value"></span>+ Desa
+          </dd>
         </div>
         <div>
           <dt class="text-[11px] text-slate-500 dark:text-slate-300">Unit Pendidikan</dt>
-          <dd class="text-sm font-semibold text-slate-900 dark:text-slate-100">SD–SMA/SMK</dd>
+          <dd
+            class="text-sm font-semibold text-slate-900 dark:text-slate-100"
+            x-data="{ value: 0, target: 4 }"
+            x-init="let i = 0; const end = target; const step = () => { if (i <= end) { value = i; i++; setTimeout(step, 90); } }; step();"
+          >
+            <span x-text="value"></span> Jenjang
+          </dd>
         </div>
         <div>
           <dt class="text-[11px] text-slate-500 dark:text-slate-300">UMKM Terbantu</dt>
-          <dd class="text-sm font-semibold text-slate-900 dark:text-slate-100">50+ Pelaku</dd>
+          <dd
+            class="text-sm font-semibold text-slate-900 dark:text-slate-100"
+            x-data="{ value: 0, target: 50 }"
+            x-init="let i = 0; const end = target; const step = () => { if (i <= end) { value = i; i++; setTimeout(step, 35); } }; step();"
+          >
+            <span x-text="value"></span>+ Pelaku
+          </dd>
         </div>
       </dl>
     </div>
@@ -98,5 +148,15 @@
         </div>
       </div>
     </div>
+    <button
+      type="button"
+      class="hidden sm:inline-flex items-center gap-2 absolute -bottom-5 left-1/2 -translate-x-1/2 text-[11px] text-slate-500 dark:text-slate-300 animate-bounce focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+      @click="const el = document.getElementById('services'); if (el) el.scrollIntoView({ behavior: 'smooth' });"
+    >
+      <span>Lihat ringkasan fitur</span>
+      <span class="inline-flex h-5 w-5 items-center justify-center rounded-full border border-slate-300 dark:border-slate-600">
+        ↓
+      </span>
+    </button>
   </div>
 </section>
